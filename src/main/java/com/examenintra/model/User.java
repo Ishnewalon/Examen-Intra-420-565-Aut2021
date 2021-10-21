@@ -16,7 +16,7 @@ public class User {
 
     private String name;
 
-    private int guess;
+    private String guess;
 
-    private int randoNumber;
+    private String randoNumber;
 }

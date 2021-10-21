@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import AuthService from "../../service/auth-service";
+import authService from "../../service/auth-service";
 import Attempt from "./Attempt/attempt";
 
 export default class AttemptsView extends Component {
@@ -9,7 +9,7 @@ export default class AttemptsView extends Component {
             attemptsList: [],
         };
 
-        AuthService.getAllAttempts()
+        authService.getAllAttempts()
             .then(attemptsList => this.setState({attemptsList}))
             .catch(e => {
                 this.setState({attemptsList: []})
@@ -19,13 +19,16 @@ export default class AttemptsView extends Component {
 
     render() {
         return (
-            <div>
-                <table>
-                    <tr>
-                        <th>Company</th>
-                        <th>Contact</th>
-                        <th>Country</th>
-                    </tr>
+            <div className="container text-center">
+                <table className="center">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Guess utilisateur</th>
+                            <th>Numero Random</th>
+                        </tr>
+                    </thead>
+
                     {this.state.attemptsList.map((attempt, index) =>
                         <tr key={attempt.id}>
                             <Attempt attempt={attempt}></Attempt>
