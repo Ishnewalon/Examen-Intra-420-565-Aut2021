@@ -1,5 +1,8 @@
 import {Component} from "react";
 import authService from "../../service/auth-service";
+import {User} from "../../model/User";
+import AttemptsView from "../AttemptsView/attemptsView";
+import ResultView from "../ResultView/resultView";
 
 
 export default class RegisterAttempt extends Component {
@@ -18,6 +21,24 @@ export default class RegisterAttempt extends Component {
         this.setState({[input]: e.target.value});
     }
 
+    genRandoNumber = () => {
+        this.state.randoNumber = Math.floor(Math.random() * 6)
+        this.throwDice()
+    }
+
+    throwDice = () => {
+        if(this.state.name === '') {
+            alert("Le nom ne peut pas etre vide")
+        }
+        else {
+            const {
+                name, guess, randoNumber
+            } = this.state;
+            let user
+            user = new User(name, guess, randoNumber);
+            this.service.createAttempt(user).then()
+        }
+    }
 
     render() {
         return (
@@ -34,9 +55,14 @@ export default class RegisterAttempt extends Component {
                                value={this.state.guess} onChange={this.handleChange("guess")}/>
                     </div>
                     <div className="form-group">
-                        <button type="button">Coup de dé</button>
+                        <button type="button" onClick={this.genRandoNumber}>Coup de dé</button>
                     </div>
                 </form>
+                <div>
+                    <ResultView guess={this.state.guess}
+                                    randoNumber={this.state.randoNumber}/>
+                    <AttemptsView/>
+                </div>
             </div>
         );
     }
